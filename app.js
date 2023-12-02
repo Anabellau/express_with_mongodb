@@ -6,7 +6,9 @@ const dotenv = require('dotenv');
 dotenv.config(); 
 
 
+
 const app = express();
+app.use(express.json())
 const port = 3000;
 
 const mongoUrl = process.env.mongo_Url;
@@ -19,12 +21,21 @@ connection.once('open', () => {
 })
 
 
-app.get('/', (req, res) => {
-  res.send('Hello, Express with MongoDB!');
-});
-app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
+app.post('./students',(req,res)=>{
+  const newStudent = new Student({
+    name: 'John',
+    first_name: 'Doe',
+    email: 'john@doe.com'
   });
+  newStudent.save()
+    .then(savedStudent => {
+       res.status(201).json(savedStudent);
+    })
+    .catch(error => {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    });
+})
 
 
 app.listen((port), ()=>{
