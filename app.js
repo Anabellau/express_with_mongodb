@@ -1,12 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const Student = require('./student');
 const dotenv = require('dotenv');
 
 dotenv.config(); 
 
 
 const app = express();
-const port = 6080;
+const port = 3000;
 
 const mongoUrl = process.env.mongo_Url;
 
